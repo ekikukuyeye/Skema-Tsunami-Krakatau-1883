@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        #map {
+            width: 1495px;
+            height: 778px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/desa__5.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-7.030365429764753,105.2031222325902],[-5.719919260239614,107.71391806171123]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Googleearth_0');
+        map.getPane('pane_Googleearth_0').style.zIndex = 400;
+        var layer_Googleearth_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_Googleearth_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_Googleearth_0;
+        map.addLayer(layer_Googleearth_0);
+        map.createPane('pane_slope_banten_1');
+        map.getPane('pane_slope_banten_1').style.zIndex = 401;
+        var img_slope_banten_1 = 'data/slope_banten_1.png';
+        var img_bounds_slope_banten_1 = [[-7.0001388898429955,105.099861111111],[-5.807361111111,106.78013889023299]];
+        var layer_slope_banten_1 = new L.imageOverlay(img_slope_banten_1,
+                                              img_bounds_slope_banten_1,
+                                              {pane: 'pane_slope_banten_1'});
+        bounds_group.addLayer(layer_slope_banten_1);
+        map.addLayer(layer_slope_banten_1);
+        map.createPane('pane_30m1_2');
+        map.getPane('pane_30m1_2').style.zIndex = 402;
+        var img_30m1_2 = 'data/30m1_2.png';
+        var img_bounds_30m1_2 = [[-7.000138889843,105.099861111111],[-5.877738889843,106.778861111111]];
+        var layer_30m1_2 = new L.imageOverlay(img_30m1_2,
+                                              img_bounds_30m1_2,
+                                              {pane: 'pane_30m1_2'});
+        bounds_group.addLayer(layer_30m1_2);
+        map.createPane('pane_15m1_3');
+        map.getPane('pane_15m1_3').style.zIndex = 403;
+        var img_15m1_3 = 'data/15m1_3.png';
+        var img_bounds_15m1_3 = [[-7.000138889843,105.099861111111],[-5.877738889843,106.778861111111]];
+        var layer_15m1_3 = new L.imageOverlay(img_15m1_3,
+                                              img_bounds_15m1_3,
+                                              {pane: 'pane_15m1_3'});
+        bounds_group.addLayer(layer_15m1_3);
+        map.createPane('pane_3m1_4');
+        map.getPane('pane_3m1_4').style.zIndex = 404;
+        var img_3m1_4 = 'data/3m1_4.png';
+        var img_bounds_3m1_4 = [[-7.000138889843,105.099861111111],[-5.877738889843,106.778861111111]];
+        var layer_3m1_4 = new L.imageOverlay(img_3m1_4,
+                                              img_bounds_3m1_4,
+                                              {pane: 'pane_3m1_4'});
+        bounds_group.addLayer(layer_3m1_4);
+        map.addLayer(layer_3m1_4);
+        function pop_desa__5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_0'] !== null ? autolinker.link(feature.properties['NAME_0'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_1'] !== null ? autolinker.link(feature.properties['NAME_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_2'] !== null ? autolinker.link(feature.properties['NAME_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_3'] !== null ? autolinker.link(feature.properties['NAME_3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME_4'] !== null ? autolinker.link(feature.properties['NAME_4'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_desa__5_0() {
+            return {
+                pane: 'pane_desa__5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,178,151,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_desa__5');
+        map.getPane('pane_desa__5').style.zIndex = 405;
+        map.getPane('pane_desa__5').style['mix-blend-mode'] = 'normal';
+        var layer_desa__5 = new L.geoJson(json_desa__5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_desa__5',
+            layerName: 'layer_desa__5',
+            pane: 'pane_desa__5',
+            onEachFeature: pop_desa__5,
+            style: style_desa__5_0,
+        });
+        bounds_group.addLayer(layer_desa__5);
+        map.addLayer(layer_desa__5);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/desa__5.png" /> desa_': layer_desa__5,"3m1": layer_3m1_4,"15m1": layer_15m1_3,"30m1": layer_30m1_2,"slope_banten": layer_slope_banten_1,"Google earth": layer_Googleearth_0,}).addTo(map);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
+</html>
